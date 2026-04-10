@@ -11,17 +11,14 @@ public class JsonUtil {
             .serializeNulls()
             .create();
 
-    // Преобразование объекта в JSON строку
     public static String toJson(Object object) {
         return gson.toJson(object);
     }
 
-    // Преобразование JSON строки в объект
     public static <T> T fromJson(String json, Class<T> classOfT) {
         return gson.fromJson(json, classOfT);
     }
 
-    // Формирование успешного ответа
     public static String successResponse(Object data) {
         JsonObject response = new JsonObject();
         response.addProperty("status", "success");
@@ -29,7 +26,6 @@ public class JsonUtil {
         return gson.toJson(response);
     }
 
-    // Формирование ответа с ошибкой
     public static String errorResponse(String message, int code) {
         JsonObject response = new JsonObject();
         response.addProperty("status", "error");
@@ -38,7 +34,6 @@ public class JsonUtil {
         return gson.toJson(response);
     }
 
-    // Формирование ответа с пагинацией
     public static String paginatedResponse(Object data, int page, int size, long total) {
         JsonObject response = new JsonObject();
         response.addProperty("status", "success");
@@ -54,7 +49,6 @@ public class JsonUtil {
         return gson.toJson(response);
     }
 
-    // Утилитный метод для установки JSON типа ответа
     public static void setJsonResponse(Response response) {
         response.type("application/json");
     }

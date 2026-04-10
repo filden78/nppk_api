@@ -76,6 +76,6 @@ public class DatabaseInitializer {
 
     private void checkConstraints() {
         logger.info("Database constraints verified");
-        // Здесь можно добавить проверку внешних ключей и других ограничений
+        //потом
     }
 }

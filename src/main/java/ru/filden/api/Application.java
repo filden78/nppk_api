@@ -1,7 +1,5 @@
 package ru.filden.api;
 
-
-import org.eclipse.jetty.util.thread.ThreadPool;
 import ru.filden.api.config.AppConfig;
 import ru.filden.api.dao.GroupDao;
 import ru.filden.api.dao.StudentDao;
@@ -20,34 +18,23 @@ public class Application {
 
     public static void main(String[] args) {
            try {
-                // 1. Загрузка конфигурации
                 config = new AppConfig("application.properties");
                 logger.info("Configuration loaded successfully");
-
-                // 2. Настройка пула потоков SparkJava
                 configureSparkThreadPool();
-
-                // 3. Инициализация подключения к БД
                 initializeDatabase();
-
-                // 4. Проверка существования БД и таблиц
                 initializeDatabaseSchema();
 
-                // 5. Инициализация DAO
                 UserDao userDao = new UserDao(dbConnection);
                 StudentDao studentDao = new StudentDao(dbConnection);
                 GroupDao groupDao = new GroupDao(dbConnection);
 
-                // 6. Регистрация эндпоинтов
                 RestEndpoints endpoints = new RestEndpoints(userDao, studentDao, groupDao);
                 endpoints.registerEndpoints();
 
-                // 7. Настройка обработки ошибок
                 setupExceptionHandling();
 
                 logger.info("Server started on port: {}", config.getServerPort());
 
-                // 8. Ожидание завершения (Spark работает в отдельном потоке)
                 Spark.awaitInitialization();
 
             } catch (Exception e) {
@@ -100,7 +87,6 @@ public class Application {
             });
         }
 
-        // Метод для graceful shutdown
         public static void shutdown() {
             logger.info("Shutting down application...");
             Spark.stop();
